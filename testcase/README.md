@@ -43,3 +43,24 @@ Sebelum menjalankan project ini, pastikan kamu sudah menginstal:
 
 5. **Buat API KEY**
    `php artisan key:generate`
+
+6. **Buat Database**
+   Pastikan namanya sesuai dengan yang ada di `.env`
+
+7. **Jalankan Migrasi dan Seeder**
+   `php artisan migrate:fresh --seed`
+   kalau sudah ada file sql nya langsung skip saja
+8. **Jalankannn**
+   `php artisan serve`
+
+## Fitur
+
+- Integrasi dengan API RajaOngkir dan leaflet js
+- Menampilkan daftar provinsi dan kota secara dinamis
+
+## Alur Singkat
+
+- User memilih Provinsi Asal → trigger fetch ke endpoint /job-orders/cities/{provinceId}
+- Dropdown Kota Asal otomatis terisi berdasarkan data dari API RajaOngkir
+- User memilih Provinsi Tujuan → dropdown Kota Tujuan juga terisi otomatis
+- Setelah itu, user dapat menghitung ongkir berdasarkan kota asal, tujuan, berat, dan kurir
