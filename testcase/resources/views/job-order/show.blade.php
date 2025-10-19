@@ -77,51 +77,56 @@
 @endsection
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        let mapInitialized = false;
+  document.addEventListener('DOMContentLoaded', function() {
+    let mapInitialized = false;
 
-        const mapModal = document.getElementById('mapModal');
-        mapModal.addEventListener('shown.bs.modal', function () {
-            if (mapInitialized) return;
+    const mapModal = document.getElementById('mapModal');
 
-            const originCity = "{{ $order->origin_city_name }}";
-            const destinationCity = "{{ $order->destination_city_name }}";
+    mapModal.addEventListener('shown.bs.modal', async function () {
+        if (mapInitialized) return;
 
-            function geocode(city) {
-                return fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(city)}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data && data[0]) {
-                            return [parseFloat(data[0].lat), parseFloat(data[0].lon)];
-                        } else {
-                            throw new Error("Koordinat tidak ditemukan untuk " + city);
-                        }
-                    });
+        const originCity = "{{ $order->origin_city_name }}";
+        const destinationCity = "{{ $order->destination_city_name }}";
+
+        async function geocode(city) {
+            const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(city)}`);
+            const data = await response.json();
+
+            if (data && data[0]) {
+                return [parseFloat(data[0].lat), parseFloat(data[0].lon)];
+            } else {
+                throw new Error("Koordinat tidak ditemukan untuk " + city);
             }
+        }
 
-            Promise.all([geocode(originCity), geocode(destinationCity)])
-                .then(([originLatLng, destinationLatLng]) => {
-                    const map = L.map('map').setView(originLatLng, 6);
+        try {
+            const [originLatLng, destinationLatLng] = await Promise.all([
+                geocode(originCity),
+                geocode(destinationCity)
+            ]);
 
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        // attribution: '&copy; OpenStreetMap contributors'
-                    }).addTo(map);
+            const map = L.map('map').setView(originLatLng, 6);
 
-                    const originMarker = L.marker(originLatLng).addTo(map)
-                        .bindPopup("<b>Origin :</b> " + originCity)
-                        .openPopup();
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-                    const destMarker = L.marker(destinationLatLng).addTo(map)
-                        .bindPopup("<b>Destination :</b> " + destinationCity);
+            const originMarker = L.marker(originLatLng).addTo(map)
+                .bindPopup("<b>Origin :</b> " + originCity)
+                .openPopup();
 
-                    L.polyline([originLatLng, destinationLatLng], {color: 'red'}).addTo(map);
+            const destMarker = L.marker(destinationLatLng).addTo(map)
+                .bindPopup("<b>Destination :</b> " + destinationCity);
 
-                    const group = new L.featureGroup([originMarker, destMarker]);
-                    map.fitBounds(group.getBounds().pad(0.5));
+            L.polyline([originLatLng, destinationLatLng], { color: 'red' }).addTo(map);
 
-                    mapInitialized = true;
-                })
-                .catch(err => alert(err));
-        });
+            const group = new L.featureGroup([originMarker, destMarker]);
+            map.fitBounds(group.getBounds().pad(0.5));
+
+            mapInitialized = true;
+
+        } catch (err) {
+            alert(err.message);
+        }
     });
+  });
 </script>
+

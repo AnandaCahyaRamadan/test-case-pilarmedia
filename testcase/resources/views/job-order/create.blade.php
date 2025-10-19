@@ -169,7 +169,7 @@
         const courier = document.getElementById('courier').value;
 
         if (!origin || !destination || !weight || !courier) {
-            alert('⚠️ Lengkapi data pengiriman terlebih dahulu!');
+            alert('Lengkapi data pengiriman terlebih dahulu!');
             return;
         }
 

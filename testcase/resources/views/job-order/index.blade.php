@@ -31,7 +31,7 @@
             <td>{{ $order->order_number }}</td>
             <td>{{ $order->origin_city_name }}</td>
             <td>{{ $order->destination_city_name }}</td>
-            <td>Rp {{ number_format($order->cost,0,',','.') }}</td>
+            <td>Rp. {{ number_format($order->cost,0,',','.') }}</td>
             <td>
                 <a href="{{ route('job-orders.show', $order->id) }}" class="btn btn-info btn-sm">Detail</a>
             </td>
