@@ -114,7 +114,8 @@
                 </div>
 
                 <div class="text-end mt-4">
-                    <button type="submit" class="btn btn-success px-4 py-2">
+                    <a href="{{ route('job-orders.index') }}" class="btn btn-secondary">Kembali</a>
+                    <button type="submit" class="btn btn-success">
                         Simpan Job Order
                     </button>
                 </div>
