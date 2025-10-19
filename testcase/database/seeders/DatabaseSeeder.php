@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\JobOrder;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Database\Seeders\UserSeeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,6 +19,7 @@ class DatabaseSeeder extends Seeder
     {
          $this->call([
             UserSeeder::class,
+            JobOrderSeeder::class,
         ]);
     }
 }
