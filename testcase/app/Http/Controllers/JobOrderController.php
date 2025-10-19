@@ -7,14 +7,14 @@ use Illuminate\Http\Request;
 
 class JobOrderController extends Controller
 {
-    public function dashboard()
+    public function index()
     {
         $jobOrders = JobOrder::all();
-        return view('dashboard', compact('jobOrders'));
+        return view('job-order.index', compact('jobOrders'));
     }
     public function show($id)
     {
         $order = JobOrder::findOrFail($id);
-        return view('detail', compact('order'));
+        return view('job-order.show', compact('order'));
     }
 }

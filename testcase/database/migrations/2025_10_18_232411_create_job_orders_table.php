@@ -23,7 +23,6 @@ return new class extends Migration
 
             // Integrasi API
             $table->decimal('cost', 12, 2)->nullable();
-            $table->decimal('distance', 10, 2)->nullable();
             $table->string('estimate')->nullable();
 
             // Data armada
