@@ -13,7 +13,7 @@
     <div class="card-body">
       <div class="d-flex justify-content-between mb-5">
         <h3>List Job Order</h3>
-        <a href="" class="btn btn-success">Create</a>
+        <a href="{{ route('job-orders.create') }}" class="btn btn-success">Create</a>
       </div>
       <table id="jobOrdersTable" class="table table-striped table-bordered">
         <thead>

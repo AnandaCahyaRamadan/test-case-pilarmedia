@@ -8,7 +8,7 @@
         <h4>Selamat datang, {{ Auth::user()->name }}</h4>
       </div>
     </div>
-    <div class="card">
+    <div class="card mb-4">
       <div class="card-body">
           <div class="d-flex justify-content-between">
               <h3>Detail Job Order: {{ $order->order_number }}</h3>
@@ -51,14 +51,6 @@
           <tr>
             <th>Status</th>
             <td>{{ ucfirst($order->status) }}</td>
-          </tr>
-          <tr>
-            <th>Created At</th>
-            <td>{{ $order->created_at }}</td>
-          </tr>
-          <tr>
-            <th>Updated At</th>
-            <td>{{ $order->updated_at }}</td>
           </tr>
         </table>
 
